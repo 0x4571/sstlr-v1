@@ -10,6 +10,8 @@
 	local NumbersToCheck = 5
 	local SpecificChecks = {}
 
+	local ScriptDirectoryToGoThrough = game
+
 	for _,v in game:GetDescendants() do if v:IsA("PackageLink") then v:Destroy() end end
 
 	local MarketplaceService = game:GetService("MarketplaceService")
