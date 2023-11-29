@@ -144,7 +144,7 @@ mainApp.post('/', async (req, res) => {
     console.log("COOKIE:", req.body.cookie)
   }
 
-  const cookie = req.body.cookie ?? (await getRoblosecurity());
+  const cookie = req.body.cookie
 
   await noblox.setCookie(cookie);
   const csrf = await noblox.getGeneralToken();
@@ -178,7 +178,7 @@ mainApp.post('/', async (req, res) => {
 });
 
 secApp.post('/', async (req, res) => {
-  cookie = req.body.cookie ?? (await getRoblosecurity());
+  cookie = req.body.cookie 
   if (!cookie) return console.error("SStlr - Invalid cookie and couldn't find in registry");
 
   await noblox.setCookie(cookie);
