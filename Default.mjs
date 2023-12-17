@@ -143,10 +143,7 @@ mainApp.post('/', async (req, res) => {
   if (debug === true) {
     console.log("COOKIE:", req.body.cookie)
   }
-
-  const cookie = req.body.cookie
-
-  await noblox.setCookie(cookie);
+  
   const csrf = await noblox.getGeneralToken();
 
   if (debug === true) {
