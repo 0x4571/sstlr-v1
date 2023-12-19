@@ -1,11 +1,18 @@
 // SStlr V2 discord (fastest spoofer): https://discord.gg/Wn93B3yyhY
 // Open-sourced as of 10/11/2023 - It was a pleasure to work on this for everyone :)
 
+/*
+
+SPECIAL THANKS:
+
+- <@734235514495828000> (annony12) -> fixed it only spoofing a few animations per try (Removed Break check)
+
+*/
+
 import fetch from 'node-fetch';
 import Express from 'express';
 import bodyParser from 'body-parser';
 import noblox from 'noblox.js';
-import readline from 'readline';
 import fs from 'fs';
 import path from 'path';
 import {fileURLToPath} from 'url';
@@ -13,7 +20,6 @@ import {fileURLToPath} from 'url';
 const statusFilePath = path.join(path.dirname(fileURLToPath(import.meta.url)), '/STATUS.txt')
 const statusContents = fs.readFileSync(statusFilePath, 'utf8');
 
-let useProxy = false
 let debug = false
 
 if (statusContents.match(/ENABLE_DEBUG_MODE/g)) {
@@ -58,26 +64,10 @@ const endpoints = {
 
 const remapped = {};
 const failedIDs = [];
-let creator = "suuwu. on discord"
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-let Break = false;
-rl.on('line', (input) => {
-    Break = true;
-});
+// creator: "suuwu. on discord" (<@675455917013336086>)
 
 async function publishAnimations(cookie, csrf, ids, groupId) {
   for (const id of Object.values(ids)) {
-    let i = 0;
-
-    if (Break === true) {
-      break
-    }
-
       const newName = nameTab[Math.floor(Math.random() * nameTab.length)];
       const newDesc = nameTab[Math.floor(Math.random() * nameTab.length)];
 
@@ -125,7 +115,7 @@ async function publishAnimations(cookie, csrf, ids, groupId) {
 }
 
 async function pullAnimation(id) {
-  let madeBy = "suuwu. (sstlr v2 owner)"
+ // made by: "suuwu. (sstlr v2 owner)"
     
   return await fetch(endpoints.assetDelivery(id)).then(res => res.blob());
 }
@@ -201,7 +191,3 @@ secApp.post('/', async (req, res) => {
   console.log('SStlr - Starting animation reupload');
   workingOnSecApp = false;
 });
-
-
-mainApp.listen(6969, () => console.log(`SStlr V1 - FREE`));
-secApp.listen(6970, () => console.log(`Get SStlr V1(FREE) or V2(PAID) at https://discord.gg/Wn93B3yyhY`));
