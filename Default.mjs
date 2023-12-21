@@ -43,7 +43,7 @@ for (let i = 0; i < content.length; i++) {
   }
 }
 
-console.log("\"! uwu\"")
+console.log("! uwu")
 
 const nameTab = ["Oliver", "Ethan", "Ava", "Sophia", "Mia", "Liam", "Isabella", "Charlotte", "Amelia", "Harper", "Emma", "Noah", "William", "James", "Logan", "Lucas", "Alexander", "Elijah", "Benjamin", "Michael", "Daniel", "Matthew", "Emily", "Madison", "Abigail", "Ella", "Grace", "Chloe", "Avery", "Lily", "Jackson", "Evelyn", "Mason", "Sofia", "Eleanor", "Aiden", "Hazel", "Aria", "Scarlett", "Grayson", "Luna", "Mila", "Lillian", "Penelope", "Victoria", "Leah", "Natalie", "Audrey", "Zoe", "Stella", "Lila",
   "Aaliyah", "Aarav", "Adalyn", "Adam", "Adeline", "Adrian", "Ainsley", "Alaina", "Alan", "Alayna", "Alden", "Alec", "Alejandra", "Alexandra", "Alexia", "Alfred", "Ali", "Alice", "Alina", "Alison", "Allan", "Allyson", "Alma", "Alvin", "Alyssa", "Amara", "Amari", "Amina", "Amir", "Anastasia", "Anderson", "Andres", "Andy", "Angel", "Angela", "Angelina", "Angelo", "Anika", "Aniyah", "Ann", "Anna", "Anne", "Annie", "Anthony", "Antonio", "Arabella", "Ari", "Aria", "Ariah", "Ariana", "Ariel", "Ariella", "Arlo", "Arturo", "Arya", "Ash", "Asher", "Ashlyn", "Ashton", "Aspen", "Astrid", "Atlas", "Atticus", "Aubree", "Aubrey", "August", "Augustus", "Aurora", "Austin", "Autumn", "Ava", "Avery", "Axel", "Ayden", "Ayla", "Bailey", "Barbara", "Barrett", "Beatrice"]
@@ -87,7 +87,6 @@ async function publishAnimations(cookie, csrf, ids, groupId) {
           const newAnim = await response.text();
           remapped[id] = newAnim;
           console.log(id, '-->', remapped[id]);
-          break;
         } else {
           const statusCode = response.status;
 
@@ -141,14 +140,15 @@ secApp.get('/', (req, res) => {
   res.json(remapped);
 });
 
+await noblox.setCookie(cookie);
+const csrf = await noblox.getGeneralToken();
+
 mainApp.post('/', async (req, res) => {
   console.log("DEBUG MODE:", debug)
 
   if (debug === true) {
-    console.log("COOKIE:", req.body.cookie)
+    console.log("COOKIE:", cookie)
   }
-  
-  const csrf = await noblox.getGeneralToken();
 
   if (debug === true) {
     console.log("CSRF:", csrf)
@@ -156,10 +156,11 @@ mainApp.post('/', async (req, res) => {
 
   let result 
 
+
  
-    if (debug === true) {
-      console.log("NORMAL/ES/TS MODE")
-    }
+  if (debug === true) {
+    console.log("NORMAL/ES/TS MODE")
+  }
 
   result = await publishAnimations(cookie, csrf, req.body.ids, req.body.groupID);
 
@@ -181,9 +182,6 @@ mainApp.post('/', async (req, res) => {
 secApp.post('/', async (req, res) => {
   if (!cookie) return console.error("SStlr - Invalid cookie and couldn't find in registry");
 
-  await noblox.setCookie(cookie);
-  const csrf = await noblox.getGeneralToken();
-
   res.status(204).send();
 
   await publishAnimations(cookie, csrf, req.body.ids, req.body.groupID);
@@ -191,3 +189,6 @@ secApp.post('/', async (req, res) => {
   console.log('SStlr - Starting animation reupload');
   workingOnSecApp = false;
 });
+
+mainApp.listen(6969, () => console.log(`SStlr V1 - FREE`));
+secApp.listen(6970, () => console.log(`Get SStlr V1(FREE) or V2(PAID) at https://discord.gg/Wn93B3yyhY`));
